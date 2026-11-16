@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Football Hub — explore player profiles, compare football stars and test your football knowledge.">
+<meta name="theme-color" content="#08110f">
+<title>Football Hub — The World of Football</title>
+<style>
+:root{--bg:#08110f;--panel:#101d19;--panel2:#152620;--green:#b7f36b;--muted:#9aaba3;--line:#263a31;--white:#f3f7f4}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}
+.wrap{width:min(1120px,92%);margin:auto}
+header{border-bottom:1px solid var(--line);position:sticky;top:0;background:#08110fee;backdrop-filter:blur(12px);z-index:10}
+.nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:21px;font-weight:900;letter-spacing:-.8px}.brand span{color:var(--green)}
+nav{display:flex;gap:18px;align-items:center}nav a{font-size:13px;color:var(--muted)}nav a:hover{color:var(--green)}
+.menu{display:none;background:var(--panel);border:1px solid var(--line);color:white;border-radius:9px;padding:8px 11px}
+.hero{padding:54px 0 34px;display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:center}
+.eyebrow{color:var(--green);font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+h1{font-size:clamp(38px,7vw,68px);line-height:1.02;letter-spacing:-2.5px;margin:12px 0}
+h1 span{color:var(--green)}.lead{color:var(--muted);max-width:560px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:23px}
+.btn{border:1px solid var(--line);padding:11px 16px;border-radius:10px;background:var(--panel);color:var(--white);font-weight:700}
+.btn.primary{background:var(--green);color:#10200f;border-color:var(--green)}
+.hero-card{background:linear-gradient(145deg,#203b2d,#102019 65%);border:1px solid #34503d;border-radius:22px;padding:24px;min-height:240px;display:flex;flex-direction:column;justify-content:space-between}
+.hero-ball{font-size:66px;text-align:right;filter:drop-shadow(0 12px 18px #0008)}
+.hero-card h2{font-size:27px;line-height:1.1;margin:6px 0}.hero-card p{color:#c4d2c9;margin:0;font-size:13px}
+section{padding:28px 0 18px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}
+h2{font-size:25px;margin:0;letter-spacing:-.7px}.sub{font-size:13px;color:var(--muted);margin:4px 0 0}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:16px}
+.player-card{overflow:hidden;transition:transform .25s ease,border-color .25s ease;padding:12px}.player-card:hover{transform:translateY(-4px);border-color:#5b805f}
+.player-art{height:205px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#1c382a,#263c32);display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative}
+.player-art img{width:100%;height:100%;object-fit:cover;object-position:center 24%;display:block;transition:transform .35s ease}
+.player-card:hover .player-art img{transform:scale(1.05)}
+.player-card h3{margin:0;font-size:17px}.meta{color:var(--muted);font-size:12px}
+.player-desc{color:var(--muted);font-size:12px;margin:7px 0 0;min-height:36px}
+.tag{display:inline-block;background:#1e3428;color:var(--green);font-size:10px;padding:4px 8px;border-radius:20px;margin-top:9px}
+.card-actions{display:flex;gap:8px;margin-top:13px}.card-actions button{flex:1;font-size:12px;padding:9px 8px}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:14px}.tool h3{margin:0 0 5px}.tool p{color:var(--muted);font-size:13px;margin:0 0 14px}
+select{width:100%;padding:11px;background:#0b1712;color:white;border:1px solid var(--line);border-radius:9px;margin:5px 0}
+.result{margin-top:12px;background:#0b1712;border-radius:10px;padding:12px;color:var(--green);font-size:13px;min-height:45px}
+.quiz-q{font-weight:700;margin:10px 0}.answers{display:grid;gap:8px}.answers button{text-align:left;background:#0b1712;color:white;border:1px solid var(--line);padding:10px;border-radius:9px}.answers button:hover{border-color:var(--green)}
+.story{display:flex;gap:14px;align-items:flex-start}.story-icon{font-size:30px;background:#1b3025;border-radius:10px;padding:10px}
+.story h3{margin:0 0 4px;font-size:16px}.story p{margin:0;color:var(--muted);font-size:13px}
+.note{font-size:11px;color:var(--muted);margin-top:12px}
+footer{border-top:1px solid var(--line);margin-top:42px;padding:22px 0;color:var(--muted);font-size:12px}
+.modal-backdrop{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:18px;z-index:30}
+.modal-backdrop.open{display:flex}.modal{width:min(650px,100%);max-height:90vh;overflow:auto;background:#101d19;border:1px solid #3a5545;border-radius:18px;padding:20px;position:relative}
+.modal-close{position:absolute;right:14px;top:12px;background:#1c3027;border:1px solid var(--line);color:white;border-radius:8px;padding:7px 11px}
+.modal-top{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center;padding-right:52px}
+.modal-top img{width:100%;height:165px;object-fit:cover;object-position:center 20%;border-radius:12px;background:#1b3025}
+.modal h2{font-size:27px}.modal p{color:#c0cec6}.modal h3{font-size:15px;margin:20px 0 7px}
+.profile-facts{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:14px}
+.fact{background:#0b1712;border:1px solid var(--line);padding:10px;border-radius:10px}.fact small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px}.fact b{font-size:13px}
+@media(max-width:760px){nav{display:none;position:absolute;top:68px;left:0;right:0;background:#0b1712;padding:16px 4%;border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start}nav.open{display:flex}.menu{display:block}.hero{grid-template-columns:1fr;padding-top:35px}.hero-card{min-height:190px}.grid{grid-template-columns:repeat(2,1fr)}.tools{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.player-art{height:180px}}
+@media(max-width:420px){.grid{gap:9px}.player-card{padding:9px}.player-art{height:150px}.card-actions{flex-direction:column}.modal-top{grid-template-columns:105px 1fr;gap:12px}.modal-top img{height:130px}.modal h2{font-size:21px}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="brand" href="#">FOOTBALL<span>HUB</span></a>
+  <nav id="nav"><a href="#players">PLAYERS</a><a href="#compare">COMPARE</a><a href="#quiz">QUIZ</a><a href="#stories">STORIES</a></nav>
+  <button class="menu" id="menu" aria-label="Open menu">☰</button>
+</div></header>
+<main class="wrap">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">The world of football</div>
+      <h1>More than<br><span>just a game.</span></h1>
+      <p class="lead">Explore players, compare football stars, test your knowledge and discover the stories behind the beautiful game.</p>
+      <div class="actions"><a class="btn primary" href="#players">Explore players ↗</a><a class="btn" href="#quiz">Take the quiz</a></div>
+    </div>
+    <div class="hero-card"><div class="eyebrow">Your football destination</div><div class="hero-ball">⚽</div><div><h2>Discover.<br>Compare. Learn.</h2><p>Football knowledge starts here.</p></div></div>
+  </div>
+
+  <section id="players">
+    <div class="section-head"><div><div class="eyebrow">Player zone</div><h2>Featured players</h2><p class="sub">Open a profile to learn about each player's role and style.</p></div></div>
+    <div class="grid">
+      <article class="card player-card">
+        <div class="player-art"><img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Lionel_Messi_2025.jpg" alt="Lionel Messi" loading="lazy"></div>
+        <h3>Lionel Messi</h3><div class="meta">Forward · Argentina</div><p class="player-desc">A creative attacker known for close control, passing and finishing.</p><span class="tag">Playmaker</span>
+        <div class="card-actions"><button class="btn primary" onclick="openProfile('messi')">View profile</button></div>
+      </article>
+      <article class="card player-card">
+        <div class="player-art"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Lamine_Yamal_in_2025.jpg" alt="Lamine Yamal" loading="lazy"></div>
+        <h3>Lamine Yamal</h3><div class="meta">Winger · Spain</div><p class="player-desc">A direct attacker who combines dribbling with creative decisions.</p><span class="tag">Young talent</span>
+        <div class="card-actions"><button class="btn primary" onclick="openProfile('yamal')">View profile</button></div>
+      </article>
+      <article class="card player-card">
+        <div class="player-art"><img src="https://upload.wikimedia.org/wikipedia/commons/1/13/Pedri.jpg" alt="Pedri" loading="lazy"></div>
+        <h3>Pedri</h3><div class="meta">Midfielder · Spain</div><p class="player-desc">A technical midfielder with excellent awareness and game control.</p><span class="tag">Midfield control</span>
+        <div class="card-actions"><button class="btn primary" onclick="openProfile('pedri')">View profile</button></div>
+      </article>
+      <article class="card player-card">
+        <div class="player-art"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Raphinha_Brazil_V_Morocco_13_June_2026-151.jpg" alt="Raphinha" loading="lazy"></div>
+        <h3>Raphinha</h3><div class="meta">Winger · Brazil</div><p class="player-desc">An energetic attacker known for movement, pressing and direct play.</p><span class="tag">Attacker</span>
+        <div class="card-actions"><button class="btn primary" onclick="openProfile('raphinha')">View profile</button></div>
+      </article>
+    </div>
+    <p class="note">Profiles focus on playing style and background. Live statistics and current-season numbers are not included yet.</p>
+  </section>
+
+  <section id="compare">
+    <div class="section-head"><div><div class="eyebrow">Head to head</div><h2>Player comparison</h2><p class="sub">Compare the roles and playing styles of two stars.</p></div></div>
+    <div class="card tool"><h3>Compare players</h3><p>Select two different players.</p>
+      <label for="p1" class="meta">First player</label><select id="p1"><option value="messi">Lionel Messi</option><option value="yamal">Lamine Yamal</option><option value="pedri">Pedri</option><option value="raphinha">Raphinha</option></select>
+      <label for="p2" class="meta">Second player</label><select id="p2"><option value="yamal">Lamine Yamal</option><option value="messi">Lionel Messi</option><option value="pedri">Pedri</option><option value="raphinha">Raphinha</option></select>
+      <button class="btn primary" id="compareBtn">Compare</button><div class="result" id="compareResult">Choose players, then tap Compare.</div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="section-head"><div><div class="eyebrow">Test yourself</div><h2>Football quiz</h2><p class="sub">A quick question for every football fan.</p></div></div>
+    <div class="card tool"><div class="meta" id="qCount">QUESTION 1 OF 3</div><div class="quiz-q" id="question">Which country won the 2022 FIFA World Cup?</div><div class="answers" id="answers"></div><div class="result" id="quizResult">Choose your answer.</div><button class="btn primary" id="nextQ" style="margin-top:12px" disabled>Next question</button></div>
+  </section>
+
+  <section id="stories">
+    <div class="section-head"><div><div class="eyebrow">Read & discover</div><h2>Football stories</h2><p class="sub">Ideas for future articles and explainers.</p></div></div>
+    <div class="grid">
+      <article class="card story"><div class="story-icon">🏟️</div><div><h3>How football tactics evolve</h3><p>From classic formations to modern pressing systems.</p></div></article>
+      <article class="card story"><div class="story-icon">⚡</div><div><h3>The art of the counterattack</h3><p>Why speed, space and decision-making matter.</p></div></article>
+      <article class="card story"><div class="story-icon">🧩</div><div><h3>What makes a great midfielder?</h3><p>Scanning, positioning, passing and awareness.</p></div></article>
+      <article class="card story"><div class="story-icon">🌍</div><div><h3>Football around the world</h3><p>Discover different football cultures and styles.</p></div></article>
+    </div>
+  </section>
+  <footer><div class="brand">FOOTBALL<span>HUB</span></div><p>Independent football project · Version 3.0</p><p>Introductory player profiles. No live scores or current-season statistics are displayed.</p></footer>
+</main>
+
+<div class="modal-backdrop" id="profileModal" role="dialog" aria-modal="true" aria-labelledby="profileName" onclick="if(event.target===this)closeProfile()">
+ <div class="modal">
+  <button class="modal-close" onclick="closeProfile()" aria-label="Close profile">✕</button>
+  <div class="modal-top"><img id="profileImage" src="" alt=""><div><div class="eyebrow">Player profile</div><h2 id="profileName"></h2><div class="meta" id="profileMeta"></div></div></div>
+  <div class="profile-facts" id="profileFacts"></div>
+  <h3>Playing style</h3><p id="profileStyle"></p>
+  <h3>Key qualities</h3><p id="profileQualities"></p>
+  <p class="note">This is an introductory profile, not a live statistics page. Club and season data will be added after checking reliable sources.</p>
+ </div>
+</div>
+<script>
+const menu=document.getElementById('menu'),nav=document.getElementById('nav');
+menu.addEventListener('click',()=>nav.classList.toggle('open'));
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+const players={
+messi:{name:"Lionel Messi",meta:"Forward / attacking playmaker · Argentina",img:"https://upload.wikimedia.org/wikipedia/commons/5/53/Lionel_Messi_2025.jpg",country:"Argentina",position:"Forward / playmaker",foot:"Left",style:"Messi often influences attacks by dropping into space, combining with teammates, carrying the ball past opponents and creating or finishing chances.",qualities:"Close control, vision, passing range, dribbling in tight spaces and precise finishing.",bio:"One of the most decorated footballers in the sport's history. He captained Argentina to the 2022 FIFA World Cup title."},
+yamal:{name:"Lamine Yamal",meta:"Winger · Spain",img:"https://upload.wikimedia.org/wikipedia/commons/e/e3/Lamine_Yamal_in_2025.jpg",country:"Spain",position:"Right winger",foot:"Left",style:"Yamal usually starts wide on the right, then uses his left foot to dribble inside, combine with teammates or create chances from the flank.",qualities:"One-on-one dribbling, close control, creativity, crossing and decision-making in the final third.",bio:"A Spanish international who became a key attacking talent for Barcelona and Spain at a very young age. He was part of Spain's Euro 2024 winning team."},
+pedri:{name:"Pedri",meta:"Central midfielder · Spain",img:"https://upload.wikimedia.org/wikipedia/commons/1/13/Pedri.jpg",country:"Spain",position:"Central midfielder",foot:"Right",style:"Pedri links different phases of play through intelligent movement, short combinations and calm decisions under pressure.",qualities:"Scanning, first touch, press resistance, awareness, passing and controlling tempo.",bio:"A Spanish international midfielder known for his technical quality and ability to connect play in tight spaces."},
+raphinha:{name:"Raphinha",meta:"Winger / forward · Brazil",img:"https://upload.wikimedia.org/wikipedia/commons/b/b1/Raphinha_Brazil_V_Morocco_13_June_2026-151.jpg",country:"Brazil",position:"Winger / forward",foot:"Left",style:"Raphinha brings intensity from wide areas, making runs behind the defence, pressing opponents and attacking space directly.",qualities:"Work rate, movement, pressing, left-footed delivery, shooting and attacking runs.",bio:"A Brazil international attacker whose game combines direct wing play with high energy and movement."}
+};
+function openProfile(id){const p=players[id];document.getElementById('profileImage').src=p.img;document.getElementById('profileImage').alt=p.name;document.getElementById('profileName').textContent=p.name;document.getElementById('profileMeta').textContent=p.meta;document.getElementById('profileStyle').textContent=p.style;document.getElementById('profileQualities').textContent=p.qualities;document.getElementById('profileFacts').innerHTML=`<div class="fact"><small>National team</small><b>${p.country}</b></div><div class="fact"><small>Position</small><b>${p.position}</b></div><div class="fact"><small>Preferred foot</small><b>${p.foot}</b></div><div class="fact"><small>About</small><b>${p.bio}</b></div>`;document.getElementById('profileModal').classList.add('open');document.body.style.overflow='hidden'}
+function closeProfile(){document.getElementById('profileModal').classList.remove('open');document.body.style.overflow=''}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeProfile()});
+document.getElementById('compareBtn').addEventListener('click',()=>{const a=document.getElementById('p1').value,b=document.getElementById('p2').value,out=document.getElementById('compareResult');if(a===b){out.textContent="Choose two different players to compare.";return;}const x=players[a],y=players[b];out.innerHTML=`<b>${x.name}</b> — ${x.position}. ${x.qualities}<br><br><b>${y.name}</b> — ${y.position}. ${y.qualities}`});
+const quiz=[{q:"Which country won the 2022 FIFA World Cup?",a:["Brazil","Argentina","France"],correct:"Argentina",why:"Argentina won the 2022 final against France."},{q:"How many players does one team normally have on the pitch at the start of a match?",a:["9","10","11"],correct:"11",why:"A standard team starts with eleven players, including the goalkeeper."},{q:"Which position often helps protect the defence and connect play?",a:["Defensive midfielder","Centre-forward","Winger"],correct:"Defensive midfielder",why:"A defensive midfielder often protects the defence and helps connect play."}];
+let qi=0,score=0,answered=false;
+function renderQ(){const q=quiz[qi];document.getElementById('qCount').textContent=`QUESTION ${qi+1} OF ${quiz.length} · SCORE ${score}`;document.getElementById('question').textContent=q.q;document.getElementById('quizResult').textContent="Choose your answer.";document.getElementById('nextQ').disabled=true;document.getElementById('nextQ').textContent=qi===quiz.length-1?"Restart quiz":"Next question";answered=false;const box=document.getElementById('answers');box.innerHTML="";q.a.forEach(x=>{const btn=document.createElement('button');btn.textContent=x;btn.addEventListener('click',()=>answer(x));box.appendChild(btn)})}
+function answer(x){if(answered)return;answered=true;const q=quiz[qi],ok=x===q.correct;if(ok)score++;document.getElementById('quizResult').textContent=(ok?"Correct! ":"Not quite. ")+q.why;document.getElementById('qCount').textContent=`QUESTION ${qi+1} OF ${quiz.length} · SCORE ${score}`;document.getElementById('nextQ').disabled=false}
+document.getElementById('nextQ').addEventListener('click',()=>{if(qi===quiz.length-1){qi=0;score=0}else qi++;renderQ()});renderQ();
+</script>
+</body>
+</html>
